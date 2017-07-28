@@ -1,0 +1,24 @@
+{
+  "name": "redis-token",
+  "description":"create token to redis",
+  "version": "1.3.0",
+  "main": "index.js",
+  "author": "wjs",
+  "license": "MIT",
+  "contributors": [
+    "wjs <wjszxli@163.com>"
+  ],
+  "dependencies": {
+    "redis": "^2.7.1"
+  },
+  "keywords": [
+    "redis",
+    "token",
+    "redistoken",
+    "author",
+    "web"
+  ],
+  "engines": {
+    "node": ">= 6.10.0"
+  }
+}
