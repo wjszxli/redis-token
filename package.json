@@ -1,7 +1,7 @@
 {
   "name": "redis-token",
-  "description":"create token to redis",
-  "version": "2.0.0",
+  "description": "create token to redis",
+  "version": "2.1.0",
   "main": "index.js",
   "author": "wjs",
   "license": "MIT",
