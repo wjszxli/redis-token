@@ -61,3 +61,9 @@ var options = {
   }
 
 ```
+
+## test
+
+```
+$ npm test
+```
