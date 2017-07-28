@@ -2,6 +2,7 @@
 
 get a random token to store  in redis. this module can be used for:
 
+- use promise
 - save session or api middleware data
 - get a token for use  verification
 - Save flash messages
@@ -15,34 +16,24 @@ $ npm install --save redis-token
 ## Usage
 
 ```javascript
-var RedisToken = require('redistoken');
+var token = require('redis-token')
 
-// Create a data store
-var dataStore = new RedisToken({
-	prefix: 'mydata'
-});
+var options = { host: '127.0.0.1', port: '6379', password: '' }
+// if you options is { host: '127.0.0.1', port: '6379', password: '' } 
+// you can write like is  'var redisToken = token.redisToken();'
+var redisToken = token.redisToken(options);
 
-// Set a key
-dataStore.set('data', function(err, token) {
-	if (err) {
-		return console.log(err);
-	}
+redisToken.createToken('wjs',1000).then((key) => {
+    console.log(key) // { token: 'qWWPJPHWngnjwjfHLuxQdCjqr4CVE9e0J51QIxSjfQmmbXl4DmwrT4PZj5nb72wj',success: true }
+})
 
-	// Give the token to whoever is going to 
-	// fetch this data in the future, usually either 
-	// as a browser cookie or in the response body 
-	// for an api.
-	
-});
+redisToken.getToken('37vTMnF5S8SMcgIjmULh6gzaG60txCktvtEljyhtLr48bPPq8rbE0AKZj5m9tgoi').then((value)=>{
+    console.log(value) // { tokenValue: 'wjs', success: true }
+})
 
-// Get the data
-dataStore.get(token, function(err, data) {
-	if (err) {
-		return console.log(err);
-	}
-
-	console.log(data); // 'data'
-});
+redisToken.killToken('37vTMnF5S8SMcgIjmULh6gzaG60txCktvtEljyhtLr48bPPq8rbE0AKZj5m9tgoi').then((value) => {
+    console.log(value) // { kill: [ 1 ], success: true }
+})
 ```
 
 ## Options
@@ -51,9 +42,9 @@ All options below are showing their default values.
 
 ```javascript
 var dataStore = new RedisToken({
-	redisPort: undefined, // The redis server port
-	redisHost: undefined, // The redis server host
-	redisOpts: {}, // The redis server connection options
+	redisPort: undefined, //  redis server port
+	redisHost: undefined, //  redis server host
+	redisOpts: {}, //  redis server connection options
 	prefix: '', // Key prefix
 	expires: 60, // Key expiration
 	onReady: noop, // Redis connection events
@@ -64,13 +55,11 @@ var dataStore = new RedisToken({
 	singleUse: true, // Delete the key after successful get
 	stringifyData: true, // JSON stringify the data before saving, parse on get
 });
-```
 
-## Tests
+var options = { 
+    host: '127.0.0.1', // the redis server host, default is '127.0.0.1'
+    port: '6379',  // the redis server port, default is '6379'
+    password: '', // the redis password, default is ''
+  }
 
 ```
-$ npm test
-$ REDIS_HOST="192.168.59.103" REDIS_PORT="6370" mocha
-```
-
-The test are run with mocha and use a docker container to run redis.  On my machine I run docker in `boot2Docker`, which starts on `192.168.59.103`.  You can see this IP in the package.json, edit this to suite your environment.  To run these tests you will need to setup `boot2docker` and run `npm run docker-redis-pull` once before getting started.  Optionally you can just run mocha directly with the second command above.
