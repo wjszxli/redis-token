@@ -41,20 +41,6 @@ redisToken.killToken('37vTMnF5S8SMcgIjmULh6gzaG60txCktvtEljyhtLr48bPPq8rbE0AKZj5
 All options below are showing their default values.
 
 ```javascript
-var dataStore = new RedisToken({
-	redisPort: undefined, //  redis server port
-	redisHost: undefined, //  redis server host
-	redisOpts: {}, //  redis server connection options
-	prefix: '', // Key prefix
-	expires: 60, // Key expiration
-	onReady: noop, // Redis connection events
-	onConnect: noop,
-	onError: noop,
-	strongKey: false, // Should it generate a cryptographically secure key
-	len: 16, // The length of the generated token
-	singleUse: true, // Delete the key after successful get
-	stringifyData: true, // JSON stringify the data before saving, parse on get
-});
 
 var options = { 
     host: '127.0.0.1', // the redis server host, default is '127.0.0.1'
